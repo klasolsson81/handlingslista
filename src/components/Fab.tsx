@@ -7,9 +7,9 @@ type FabProps = {
 
 export function Fab({ onClick, label = "Lägg till" }: FabProps) {
   return (
-    <div className="fixed z-30 right-5 bottom-5 flex items-center gap-2 pointer-events-none">
+    <div className="flex items-center gap-2">
       <span
-        className="pointer-events-auto bg-(--surface) border border-(--border) rounded-full px-4 py-2 text-sm font-medium text-(--text-primary) shadow-[0_1px_3px_rgba(0,0,0,0.04)]"
+        className="pointer-events-auto bg-(--surface) border border-(--border) rounded-full px-4 py-2.5 text-sm font-medium text-(--text-primary) shadow-[0_1px_3px_rgba(0,0,0,0.04)]"
         aria-hidden="true"
       >
         {label}
