@@ -18,6 +18,7 @@ export type AppState = {
   createdAt: number;
   categories: Category[];
   items: Item[];
+  spendTotal: number;
   version: 1;
 };
 
@@ -28,5 +29,6 @@ export const createDefaultState = (): AppState => ({
   createdAt: Date.now(),
   categories: [],
   items: [],
+  spendTotal: 0,
   version: 1,
 });

@@ -3,13 +3,20 @@ import { useEffect, useRef, useState } from "react";
 export function useLocalState<T>(
   key: string,
   initial: () => T,
-  debounceMs = 200,
+  options?: {
+    debounceMs?: number;
+    migrate?: (raw: unknown) => T;
+  },
 ): [T, React.Dispatch<React.SetStateAction<T>>] {
+  const debounceMs = options?.debounceMs ?? 200;
+  const migrate = options?.migrate;
+
   const [value, setValue] = useState<T>(() => {
     try {
       const raw = localStorage.getItem(key);
       if (raw === null) return initial();
-      return JSON.parse(raw) as T;
+      const parsed = JSON.parse(raw) as unknown;
+      return migrate ? migrate(parsed) : (parsed as T);
     } catch {
       return initial();
     }
