@@ -1,3 +1,4 @@
+import { Flame } from "lucide-react";
 import { formatKr } from "../lib/formatKr";
 
 type SpendPillProps = {
@@ -5,7 +6,21 @@ type SpendPillProps = {
   onClick: () => void;
 };
 
+const WARN_AT = 3000;
+const OVER_AT = 5000;
+
 export function SpendPill({ total, onClick }: SpendPillProps) {
+  const level: 0 | 1 | 2 = total >= OVER_AT ? 2 : total >= WARN_AT ? 1 : 0;
+
+  const amountColor =
+    level === 2
+      ? "text-(--danger)"
+      : level === 1
+        ? "text-(--warn)"
+        : "text-(--text-primary)";
+
+  const amountSize = level === 2 ? "text-base" : "text-sm";
+
   return (
     <button
       type="button"
@@ -16,7 +31,16 @@ export function SpendPill({ total, onClick }: SpendPillProps) {
       <span className="text-xs uppercase tracking-wide text-(--text-secondary)">
         Summa
       </span>
-      <span className="text-sm font-semibold text-(--text-primary) tabular-nums">
+      {level === 2 && (
+        <Flame
+          className="w-4 h-4 text-(--danger) animate-pop"
+          strokeWidth={2.4}
+          aria-hidden="true"
+        />
+      )}
+      <span
+        className={`font-semibold tabular-nums transition-all duration-300 ${amountSize} ${amountColor}`}
+      >
         {formatKr(total)}
       </span>
     </button>
